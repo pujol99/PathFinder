@@ -10,8 +10,5 @@ class Node:
             pow(node.x-self.x, 2)+pow(node.y-self.y, 2)
         )
 
-    def totuple(self):
-        return (self.x, self.y)
-
     def __str__(self):
         return f"({self.x}, {self.y})"

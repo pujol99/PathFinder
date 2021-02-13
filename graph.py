@@ -3,17 +3,22 @@ from random import randrange
 from matplotlib import pyplot as plt
 
 class Graph:
-    def __init__(self, _range):
+    def __init__(self, space, size):
         self.nodes = set()
         self.start = None
-        self.range = _range
+        self.space = space
+        self.size = size
 
-        
+    def build_random(self):
+        self.start = self.random_node()
+        for i in range(self.size):
+            self.add_node(self.random_node())
+
     def add_node(self, node):
         self.nodes.add(node)
 
     def random_node(self):
-        return Node(randrange(self.range), randrange(self.range))
+        return Node(randrange(self.space), randrange(self.space))
 
     def show_graph(self):
         plt.plot(self.start.x, self.start.y, 'bo')
