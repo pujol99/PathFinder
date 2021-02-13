@@ -1,14 +1,12 @@
 from graph import Graph
-from utils import *
 from solver import ClosestNode
 
 def main():
-    graph = Graph(20, 5)
+    graph = Graph(40, 50)
     graph.build_random()
 
     method1 = ClosestNode()
     method1.solve(graph)
-    method1.show()
 
 
 

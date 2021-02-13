@@ -1,17 +1,12 @@
-from utils import *
+import matplotlib.pyplot as plt
 
 class Solver:
     def __init__(self):
-        self.x1, self.x2, self.y1, self.y2 = [], [], [], []
+        self.cost = 0
 
     def line(self, start, end):
-        self.x1.append(start.x)
-        self.x2.append(end.x)
-        self.y1.append(start.y)
-        self.y2.append(end.y)
-    
-    def show(self):
-        plot_lines(self.x1, self.y1, self.x2, self.y2, self.title)
+        plt.plot([start.x, end.x], [start.y, end.y] ,'-k')
+        plt.pause(0.02)
 
 class ClosestNode(Solver):
     def __init__(self):
@@ -19,14 +14,21 @@ class ClosestNode(Solver):
         self.title = "Closest Node Method"
 
     def solve(self, graph):
+        graph.show_graph()
+        plt.title(self.title)
+
         current_node = graph.start
         while graph.nodes:
             distance, node = graph.closest_node(current_node)
+            self.cost += distance
 
             self.line(current_node, node)
 
             graph.nodes.remove(node)
             current_node = node
+        
+        plt.title(f"{self.title}, Cost: {int(self.cost)}")
+        plt.show()
 
 class Dijkstra(Solver):
     def __init__(self):
