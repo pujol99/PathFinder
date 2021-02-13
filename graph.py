@@ -20,13 +20,12 @@ class Graph:
     def show_graph(self):
         plt.plot(self.start.x, self.start.y, 'bo')
         for node in self.nodes:
-            plt.plot(node.x, node.y, 'go')
+            plt.plot(node.x, node.y, 'ro')
 
     def closest_node(self, node):
         closest = 99999, None
-        for element in self.nodes:
-            if element != node:
-                distance = node.compute_distance(element)
-                if distance < closest[0]:
-                    closest = distance, element
+        for element in self.nodes-{node}:
+            distance = node.compute_distance(element)
+            if distance < closest[0]:
+                closest = distance, element
         return closest
