@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from copy import deepcopy
-from utils import Tree
 
 class Solver:
     def __init__(self):
@@ -49,39 +48,40 @@ class TravelingSalesman(Solver):
     def __init__(self):
         super().__init__()
         self.title = "Traveling Salesman Method"
+        self.data = {}
 
     def solve_method(self, graph):
         self.start = graph.start
+        self.cost = self.min_path(self.start, graph.nodes)
 
-        self.cost, tree = self.min_path(self.start, graph.nodes)
-        
         current_node = graph.start
-        while tree.children:
-            min_distance = 999999, None, None
-            for _tree in tree.children:
-                node, _, distance = _tree.data
-                if distance < min_distance[0]:
-                    min_distance = distance, node, _tree
-            self.line(current_node, min_distance[1])
-
-            current_node = min_distance[1]
-            tree = min_distance[2]
+        while graph.nodes:
+            distance, node = self.data[self.to_str(current_node, graph.nodes)]
+            node = graph.get(node)
+            self.line(current_node, node)
+            graph.nodes.remove(node)
+            current_node = node
         self.line(current_node, self.start)
-
-
+        
     def min_path(self, node, neighbors):
         if not neighbors:
             distance = node.compute_distance(self.start)
-            return distance, Tree((node, neighbors, distance))
+            self.data[self.to_str(node, neighbors)] = (distance, self.start.index)
+            return distance
         
-        min_distance = 999999
+        min_distance = 999999, None
         children = []
         for neighbor in neighbors:
-            best_child = self.min_path(neighbor, neighbors-{neighbor})
-            distance = node.compute_distance(neighbor) + best_child[0]
-            children.append(best_child[1])
+            distance = node.compute_distance(neighbor) + self.min_path(neighbor, neighbors-{neighbor})
 
-            if distance < min_distance:
-                min_distance = distance
+            if distance < min_distance[0]:
+                min_distance = distance, neighbor
 
-        return min_distance, Tree((node, neighbors, min_distance), children=children)
+        self.data[self.to_str(node, neighbors)] = (min_distance[0], min_distance[1].index)
+        return min_distance[0]
+
+    def to_str(self, node, neighbors):
+        string = str(node.index)
+        for neighbor in sorted([neighbor.index for neighbor in neighbors]):
+            string += "|"+str(neighbor)
+        return string

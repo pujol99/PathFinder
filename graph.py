@@ -10,12 +10,12 @@ class Graph:
         self.size = size
 
     def build_random(self):
-        self.start = self.random_node()
+        self.start = self.random_node(0)
         for i in range(self.size):
-            self.nodes.add(self.random_node())
+            self.nodes.add(self.random_node(i+1))
 
-    def random_node(self):
-        return Node(randrange(self.space), randrange(self.space))
+    def random_node(self, index):
+        return Node(randrange(self.space), randrange(self.space), index)
 
     def show_graph(self):
         plt.plot(self.start.x, self.start.y, 'bo')
@@ -30,12 +30,17 @@ class Graph:
                 closest = distance, element
         return closest
 
+    def get(self, index):
+        for node in self.nodes:
+            if node.index == index:
+                return node
+
 
 class Node:
-    def __init__(self, x, y):
+    def __init__(self, x, y, index):
         self.x = x
         self.y = y
-        self.next = None
+        self.index = index
     
     def compute_distance(self, node):
         return math.sqrt(
