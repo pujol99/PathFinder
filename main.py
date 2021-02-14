@@ -2,7 +2,7 @@ from graph import Graph
 from solver import *
 
 def main():
-    graph = Graph(40, 50)
+    graph = Graph(40, 4)
     graph.build_random()
 
     for method in [ClosestNode, TravelingSalesman]:

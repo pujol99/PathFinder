@@ -1,6 +1,6 @@
-from node import Node
 from random import randrange
 from matplotlib import pyplot as plt
+import math
 
 class Graph:
     def __init__(self, space, size):
@@ -29,3 +29,18 @@ class Graph:
             if distance < closest[0]:
                 closest = distance, element
         return closest
+
+
+class Node:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.next = None
+    
+    def compute_distance(self, node):
+        return math.sqrt(
+            pow(node.x-self.x, 2)+pow(node.y-self.y, 2)
+        )
+
+    def __str__(self):
+        return f"({self.x}, {self.y})"
