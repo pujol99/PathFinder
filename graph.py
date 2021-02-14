@@ -24,6 +24,13 @@ class Graph:
                 closest = distance, element
         return closest
 
+    def get(self, index):
+        if index == 0:
+            return self.start
+        for node in self.nodes:
+            if node.index == index:
+                return node
+
 
 class Node:
     def __init__(self, x, y, index):
@@ -34,6 +41,9 @@ class Node:
     def compute_distance(self, node):
         return math.sqrt(
             pow(node.x-self.x, 2)+pow(node.y-self.y, 2))
+
+    def get(self):
+        return (self.x, self.y)
 
     def __str__(self):
         return f"({self.x}, {self.y})"

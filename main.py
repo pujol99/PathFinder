@@ -3,10 +3,10 @@ from solver import *
 from utils import *
 
 def main():
-    graph = Graph(40, 8)
+    graph = Graph(40, 5)
     graph.build_random()
 
-    for method in [ClosestNode, TravelingSalesman]:
+    for method in [ClosestNode, TravelingSalesman, MLRose]:
         method().solve(graph)
 
     show()
