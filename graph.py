@@ -1,5 +1,4 @@
 from random import randrange
-from matplotlib import pyplot as plt
 import math
 
 class Graph:
@@ -17,11 +16,6 @@ class Graph:
     def random_node(self, index):
         return Node(randrange(self.space), randrange(self.space), index)
 
-    def show_graph(self):
-        plt.plot(self.start.x, self.start.y, 'bo')
-        for node in self.nodes:
-            plt.plot(node.x, node.y, 'ro')
-
     def closest_node(self, node):
         closest = 99999, None
         for element in self.nodes-{node}:
@@ -29,11 +23,6 @@ class Graph:
             if distance < closest[0]:
                 closest = distance, element
         return closest
-
-    def get(self, index):
-        for node in self.nodes:
-            if node.index == index:
-                return node
 
 
 class Node:
@@ -44,8 +33,7 @@ class Node:
     
     def compute_distance(self, node):
         return math.sqrt(
-            pow(node.x-self.x, 2)+pow(node.y-self.y, 2)
-        )
+            pow(node.x-self.x, 2)+pow(node.y-self.y, 2))
 
     def __str__(self):
         return f"({self.x}, {self.y})"
