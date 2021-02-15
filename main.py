@@ -5,8 +5,8 @@ from results import *
 
 def main():
     times = []
-    methods = [ClosestNode(), TravelingSalesman(), MLRose()]
-    _range = 4, 20
+    methods = [ClosestNode(), DynamicSolution(), MLRose()]
+    _range = 4, 14
     map_size = 80
 
     for i in range(_range[0], _range[1]):
@@ -15,7 +15,7 @@ def main():
         times_i = []
 
         for method in methods:
-            if type(method) == type(TravelingSalesman()) and i > 9:
+            if  i > 9 and type(method) == type(DynamicSolution()):
                 times_i.append(None)
                 continue
             method.solve(graph)

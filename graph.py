@@ -4,7 +4,6 @@ import math
 class Graph:
     def __init__(self, space, size):
         self.nodes = set()
-        self.start = None
         self.space = space
         self.size = size
 

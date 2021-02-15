@@ -7,7 +7,7 @@ class Results:
         self.names = names
 
     def show_results(self):
-        plt.plot(self.data)
-        plt.title(f"Time results (Cities range [{self.start}, {self.end-1}])")
+        plt.plot([i for i in range(self.start, self.end)], self.data)
+        plt.title(f"Time results")
         plt.legend(self.names)
         plt.show()
