@@ -9,23 +9,24 @@ import mlrose
 
 
 class Solver:
-    def initialize(self, graph):
+    def initialize(self, graph, show_plots):
         self.cost = 0
+        self.show_plots = show_plots
         self.start = graph.start
         self.path = []
         self.time = time.process_time()
 
-        self.ax = initialize_plot(graph, self.title)
+        self.ax = initialize_plot(graph, self.title) if show_plots else None
 
     def finalize(self):
-        self.time = time.process_time() - self.time
-        
-        finalize_plot(self.title, self.cost, self.time)
+        if self.show_plots:
+            finalize_plot(self.title, self.cost, self.time)
 
-    def solve(self, graph):
-        self.initialize(graph)
-        self.solve_method(deepcopy(graph), self.start)
+    def solve(self, graph, show_plots):
+        self.initialize(graph, show_plots)
+        self.time = self.solve_method(deepcopy(graph), self.start)
         self.finalize()
+        return self.time
 
 class ClosestNode(Solver):
     def __init__(self):
@@ -44,6 +45,8 @@ class ClosestNode(Solver):
         self.path.append(current_node)
         display_path(self.ax, self.path)
 
+        return time.process_time() - self.time
+
 
 class DynamicSolution(Solver):
     def __init__(self):
@@ -53,6 +56,8 @@ class DynamicSolution(Solver):
         self.data = {}
         self.cost = self.min_path(self.start, graph.nodes)
         self.backtrack(graph, current_node)
+
+        return time.process_time() - self.time
         
     def min_path(self, node, neighbors):
         if not neighbors:
@@ -101,3 +106,5 @@ class MLRose(Solver):
 
         self.path = [graph.get(node) for node in self.path]
         display_path(self.ax, self.path)
+
+        return time.process_time() - self.time

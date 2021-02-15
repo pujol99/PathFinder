@@ -34,6 +34,8 @@ def finalize_plot(title, cost, time):
 
 
 def display_path(ax, path):
+    if not ax:
+        return
     for i in range(len(path)-1):
         line(ax, path[i], path[i+1])
     line(ax, path[i+1], path[0])
